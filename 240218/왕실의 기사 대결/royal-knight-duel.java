@@ -31,13 +31,14 @@ public class Main {
 		
 	}
 	static boolean rangeCheck(int r, int c, int h, int w) {
-		return r >= 1 && r+h <= L && c >= 1 && c+w <= L;
+		return r >= 1 && r+h-1 <= L && c >= 1 && c+w-1 <= L;
 	}
 	static boolean moveCheck(int kNum, int d) {
 		Queue<Integer> q = new ArrayDeque<>();
 		
 		q.add(kNum);
 		knight[kNum].flag = true;
+
 		while(!q.isEmpty()) {
 			int idx = q.poll();
 			
@@ -47,9 +48,9 @@ public class Main {
 			int w = knight[idx].w;
 			
 			if(!rangeCheck(r, c, h, w)) return false;
+
 			for(int i=r; i<r+h; i++) {
 				for(int j=c; j<c+w; j++) {
-//					if(idx == 1) System.out.println(c + " " + w);
 					if(map[i][j] == 1) {
 						knight[idx].dmg++;
 					}
@@ -69,7 +70,7 @@ public class Main {
 					continue;
 				if(knight[i].c > c + w || knight[i].c + knight[i].w < c)
 					continue;
-//				System.out.println(idx + "  " + i + " " + d);
+
 				q.add(i);
 				knight[i].flag = true;
 				
@@ -84,7 +85,6 @@ public class Main {
 		if(moveCheck(kNum, d)) {
 			for(int i=1; i<=N; i++) {
 				if(knight[i].flag) {
-//					System.out.println(knight[i].dmg);
 					knight[i].r += dx[d];
 					knight[i].c += dy[d];
 					knight[i].k -= knight[i].dmg;
