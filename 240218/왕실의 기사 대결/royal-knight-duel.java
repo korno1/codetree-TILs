@@ -66,13 +66,15 @@ public class Main {
 			for(int i=1; i<=N; i++) {
 				if(knight[i].k <= 0 || knight[i].flag) continue;
 
-				if(knight[i].r > r + h-1 || knight[i].r + knight[i].h-1 < r)
-					continue;
-				if(knight[i].c > c + w -1|| knight[i].c + knight[i].w -1< c)
-					continue;
-//				System.out.println(kNum + " " +i);
-				q.add(i);
-				knight[i].flag = true;
+//				if(knight[i].r > r + h-1 || knight[i].r + knight[i].h-1 < r)
+//					continue;
+//				if(knight[i].c > c + w -1|| knight[i].c + knight[i].w -1< c)
+//					continue;
+				if(knight[i].r <= r + h-1 && knight[i].r + knight[i].h-1 >= r && knight[i].c <= c + w -1 && knight[i].c + knight[i].w -1 >= c) {
+					
+					q.add(i);
+					knight[i].flag = true;
+				}
 				
 				
 			}
