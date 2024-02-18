@@ -10,7 +10,6 @@ public class Main {
 	static int L, N, Q; // 체스판 크기, 기사의 수, 명령의 수
 	static int[][] map;
 	static knightInfo[] knight;
-//	int res = 0;
 	
 	static int[] dx = {-1, 0, 1, 0};
 	static int[] dy = {0, 1, 0, -1};
@@ -30,6 +29,11 @@ public class Main {
 		}
 		
 	}
+	
+	static boolean moveTogether(int i, int r, int c, int h, int w) {
+		return knight[i].r <= r + h-1 && knight[i].r + knight[i].h-1 >= r && knight[i].c <= c + w -1 && knight[i].c + knight[i].w -1 >= c;
+	}
+	
 	static boolean rangeCheck(int r, int c, int h, int w) {
 		return r >= 1 && r+h-1 <= L && c >= 1 && c+w-1 <= L;
 	}
@@ -41,7 +45,6 @@ public class Main {
 
 		while(!q.isEmpty()) {
 			int idx = q.poll();
-//			System.out.println(idx + " " + knight[idx].r + " " + knight[idx].c);
 			int r = knight[idx].r + dx[d];
 			int c = knight[idx].c + dy[d];
 			int h = knight[idx].h;
@@ -59,19 +62,11 @@ public class Main {
 					}
 				}
 			}
-//			knight[idx].flag = true;
-//			r -= dx[d];
-//			c -= dy[d];
 //			
 			for(int i=1; i<=N; i++) {
 				if(knight[i].k <= 0 || knight[i].flag) continue;
 
-//				if(knight[i].r > r + h-1 || knight[i].r + knight[i].h-1 < r)
-//					continue;
-//				if(knight[i].c > c + w -1|| knight[i].c + knight[i].w -1< c)
-//					continue;
-				if(knight[i].r <= r + h-1 && knight[i].r + knight[i].h-1 >= r && knight[i].c <= c + w -1 && knight[i].c + knight[i].w -1 >= c) {
-					
+				if(moveTogether(i, r, c, h, w)) {
 					q.add(i);
 					knight[i].flag = true;
 				}
@@ -141,7 +136,6 @@ public class Main {
 		}
 		int res = 0;
 		for(int i=1; i<=N; i++) {
-//			System.out.println(knight[i].k);
 			if(knight[i].k > 0) res += fk[i] - knight[i].k;
 		}
 		
