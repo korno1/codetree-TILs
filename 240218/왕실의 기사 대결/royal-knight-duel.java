@@ -41,7 +41,7 @@ public class Main {
 
 		while(!q.isEmpty()) {
 			int idx = q.poll();
-			
+//			System.out.println(idx + " " + knight[idx].r + " " + knight[idx].c);
 			int r = knight[idx].r + dx[d];
 			int c = knight[idx].c + dy[d];
 			int h = knight[idx].h;
@@ -51,7 +51,7 @@ public class Main {
 
 			for(int i=r; i<r+h; i++) {
 				for(int j=c; j<c+w; j++) {
-					if(map[i][j] == 1) {
+ 					if(map[i][j] == 1) {
 						knight[idx].dmg++;
 					}
 					else if(map[i][j] == 2) {
@@ -59,25 +59,25 @@ public class Main {
 					}
 				}
 			}
-			knight[idx].flag = true;
-			r -= dx[d];
-			c -= dy[d];
-			
+//			knight[idx].flag = true;
+//			r -= dx[d];
+//			c -= dy[d];
+//			
 			for(int i=1; i<=N; i++) {
 				if(knight[i].k <= 0 || knight[i].flag) continue;
 
-				if(knight[i].r > r + h || knight[i].r + knight[i].h < r)
+				if(knight[i].r > r + h-1 || knight[i].r + knight[i].h-1 < r)
 					continue;
-				if(knight[i].c > c + w || knight[i].c + knight[i].w < c)
+				if(knight[i].c > c + w -1|| knight[i].c + knight[i].w -1< c)
 					continue;
-
+//				System.out.println(kNum + " " +i);
 				q.add(i);
 				knight[i].flag = true;
 				
 				
 			}
 		}
-		
+		knight[kNum].dmg = 0;
 		return true;
 	}
 	
@@ -90,6 +90,13 @@ public class Main {
 					knight[i].k -= knight[i].dmg;
 				}
 				knight[i].flag = false;
+				knight[i].dmg = 0;
+			}
+		}
+		else {
+			for(int i=1; i<=N; i++) {
+				knight[i].flag = false;
+				knight[i].dmg = 0;
 			}
 		}
 	}
@@ -127,11 +134,12 @@ public class Main {
 			st = new StringTokenizer(br.readLine());
 			int kNum = Integer.parseInt(st.nextToken()); 
 			int d = Integer.parseInt(st.nextToken()); 
-			move(kNum, d);
+			if(knight[kNum].k > 0)
+				move(kNum, d);
 		}
 		int res = 0;
 		for(int i=1; i<=N; i++) {
-//			System.out.println(fk[i] + " " + knight[i].k);
+//			System.out.println(knight[i].k);
 			if(knight[i].k > 0) res += fk[i] - knight[i].k;
 		}
 		
